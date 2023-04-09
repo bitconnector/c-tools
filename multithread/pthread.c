@@ -1,5 +1,5 @@
 // https://www.makeuseof.com/c-linux-thread-create/
-//  gcc pthread.c -lpthread
+// gcc pthread.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
