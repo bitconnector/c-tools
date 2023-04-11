@@ -1,4 +1,6 @@
 //https://stackoverflow.com/questions/59931316/linux-kernel-crypto-api-for-ecb-aes
+//https://www.kernel.org/doc/html/latest/crypto/userspace-if.html
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -17,7 +19,7 @@ void encrypt(char *key, int keylen, char *data, int datalen)
       .salg_type = "skcipher",
       .salg_name = "ecb(aes)"};
   char cbuf[CMSG_SPACE(4)] = {0};
-  
+
   int tfmfd = socket(AF_ALG, SOCK_SEQPACKET, 0);
 
   bind(tfmfd, (struct sockaddr *)&sa, sizeof(sa));
