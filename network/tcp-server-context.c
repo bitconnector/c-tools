@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <netinet/tcp.h>
 
 struct SessionData
 {
@@ -21,6 +22,9 @@ struct SessionData
 int main(int argc, char *argv[])
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    int yes = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)); // open port after restart with pending connections
 
     struct sockaddr_in servaddr;
     servaddr.sin_family = AF_INET;
@@ -69,6 +73,8 @@ int main(int argc, char *argv[])
                     printf("server accept failed...\n");
                     exit(0);
                 }
+                int no = 0;
+                setsockopt(connfd, IPPROTO_TCP, TCP_QUICKACK, &no, sizeof(int)); // disable automatic empty ack reply
                 struct SessionData *session = malloc(sizeof(struct SessionData));
                 event.data.ptr = session;
                 event.events = EPOLLIN;
