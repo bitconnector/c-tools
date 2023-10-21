@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     int yes = 1;
+    int no = 0;
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)); // open port after restart with pending connections
 
     struct sockaddr_in servaddr;
@@ -73,7 +74,6 @@ int main(int argc, char *argv[])
                     printf("server accept failed...\n");
                     exit(0);
                 }
-                int no = 0;
                 setsockopt(connfd, IPPROTO_TCP, TCP_QUICKACK, &no, sizeof(int)); // disable automatic empty ack reply
                 struct SessionData *session = malloc(sizeof(struct SessionData));
                 event.data.ptr = session;
