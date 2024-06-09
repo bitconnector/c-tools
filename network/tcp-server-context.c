@@ -27,6 +27,9 @@ int main(int argc, char *argv[])
     int no = 0;
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)); // open port after restart with pending connections
 
+    // int flen = 120;
+    // setsockopt(sockfd, IPPROTO_TCP, TCP_MAXSEG, &flen, sizeof(flen)); // restrict the maximum packet size
+
     struct sockaddr_in servaddr;
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
